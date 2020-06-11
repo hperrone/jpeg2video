@@ -1,0 +1,80 @@
+################################################################################
+###  Image to video player
+#
+# This is a docker-compose file used to build and launch the docker images that
+# composes this solution. The docker images are:
+#
+#  - web: web server based on nginx. This docker image includes all the web
+#       client static resources (html, css, js and images).
+#       Volumes:
+#         - vidfeed: contains the generated video streams
+#         - doc:     contains this project's documentation
+#
+#  - encoder: encodes image sequences to MPEG-DASH video stream. This docker
+#       image is based on alpine linux and includes ffmpeg package.
+#       Mount points:
+#         - /jobs_in:  contains a sequence of images to be encoded
+#         - /jobs_out: contains the generated MPEG-DASH video stream
+#         - /encoders: encoders registry 
+#
+#  - pipeman: Pipeline Manager. Coordinates the ingest, decoding and publishing
+#       of the image sequeces to be procesed. This docker image is based on
+#       OpenJDK.
+#       Mount points:
+#         - /var/run/docker.sock:/var/run/docker.sock so it can access the 
+#           HOST's docker enviromnent and access its sibling containers.
+#         - /jobs_in:  contains a sequence of images to be encoded
+#         - /jobs_out: contains the generated MPEG-DASH video stream
+#         - /encoders: encoders registry 
+#
+# Usage:
+#  1. For (re)building all docker images 
+#    docker-compose build
+# 
+#  2. For launching the solution
+#    docker-compose up --scale encoder=<n_encoders>
+#
+#  3. For reseting the solution (clear all persistent volumes)
+#    Launch the solution and in a separate terminal, execute:
+#       docker exec -it jpeg2video_pipeman_1 /reset_all.sh
+#    And then, relaunch the solution.
+#
+# See README.MD for further details.
+#
+###  # Released under MIT License
+###  Copyright (c) 2020 Hernan Perrone (hernan.perrone@gmail.com)
+################################################################################
+version: "3.8"
+services:
+    web:
+        build:
+          context: ./webclient
+          dockerfile: Dockerfile
+        ports: 
+        - "8080:80"
+        volumes:
+        - vidfeed:/usr/share/nginx/html/vidfeed:ro
+        - ./doc:/usr/share/nginx/html/doc:ro
+    encoder:
+        build:
+          context: ./encoder
+          dockerfile: Dockerfile 
+        volumes:
+          - ./ingest:/jobs_in:rw
+          - vidfeed:/jobs_out:rw
+          - encoders:/encoders:rw
+    pipeman:
+        build: 
+          context: ./pipeman
+          dockerfile: Dockerfile
+        depends_on:
+          - encoder
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - ./ingest:/jobs_in:rw
+          - vidfeed:/jobs_out:rw
+          - encoders:/encoders:ro
+
+volumes:
+    vidfeed:
+    encoders:
