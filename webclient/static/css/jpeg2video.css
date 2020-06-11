@@ -1,0 +1,94 @@
+/******************************************************************************
+ * jpeg2video Web Client - CSS file
+ *
+ * ## Released under MIT License
+ * ## Copyright (c) 2020 Hernan Perrone (hernan.perrone@gmail.com)
+ *****************************************************************************/
+
+/* Style of the container for the video player */
+.video-player-container {
+	background-color: #f0f0f0;
+	margin-bottom: 1em;
+	position: relative;
+}
+
+.video-player-control-bar {
+	background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 90%);
+	color: #ffffff;
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 0.6s;
+}
+
+.video-player-control-bar > button {
+	border: 0px;
+	border-radius: 15%;
+	color: #f0f0f0;
+	background-color: rgba(0,0,0,0);
+	outline: none;
+	box-shadow: none;
+}
+
+.video-player-control-bar > button:focus {
+	border: 0px;
+	color: #f0f0f0;
+	background-color: rgba(0,0,0,0);
+	outline: none;
+	box-shadow: none;
+}
+
+.video-player-control-bar > button:hover {
+	border: 0px;
+	color: #ffffff;
+	background: radial-gradient(ellipse at center,
+			rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%);
+	outline: none;
+	box-shadow: none;
+}
+
+.video-player-control-bar:hover {
+	opacity: 1;
+}
+
+.force-visible {
+	opacity: 1 !important;
+}
+
+/* Sets the hand pointer over clickable elements */
+.clickable {
+	cursor: pointer;
+}
+
+/* Animations for the stream-list */
+.stream-list-item.ng-enter,
+.stream-list-item.ng-leave,
+.stream-list-item.ng-move {
+	transition: 0.5s linear all;
+}
+
+.stream-list-item.ng-enter,
+.stream-list-item.ng-move {
+	height: 0;
+	opacity: 0;
+	overflow: hidden;
+}
+
+.stream-list-item.ng-enter.ng-enter-active,
+.stream-list-item.ng-move.ng-move-active {
+	height: auto;
+	opacity: 1;
+}
+
+.stream-list-item.ng-leave {
+	opacity: 1;
+	overflow: hidden;
+}
+
+.stream-list-item.ng-leave.ng-leave-active {
+	height: 0;
+	opacity: 0;
+	padding-bottom: 0;
+	padding-top: 0;
+}
