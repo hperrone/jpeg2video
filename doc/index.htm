@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+	<!-- Better seen on tabs-size: 4, 120 cols editor -->
+	<head>
+		<title>Image sequence player - Documentation</title>
+		<meta charset="utf-8">
+		<meta name="viewport"
+				content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Boostrap CSS -->
+		<link rel="stylesheet"
+				href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+				integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+				crossorigin="anonymous">
+
+		<!-- Google Material icon font -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+				rel="stylesheet">
+		
+		<!-- Custom CSS to improve MD rendering -->
+		<link href="doc.css" rel="stylesheet">
+	</head>
+	<body>
+		<!--------------------------------------------------------------------------->
+		<!--                             PAGE CONTAINER                            -->
+		<!--------------------------------------------------------------------------->
+		<div class="container-fluid">
+
+			<!----------------------------------------------------------------------->
+			<!--                              NAVBAR                               -->
+			<!----------------------------------------------------------------------->
+			<!-- Mostly adapted from Boostrap example -->
+			<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+				<a class="navbar-brand" href="#">HP</a>
+				<!-- Toggle menu button shown on small displays -->
+				<button class="navbar-toggler" type="button"
+						data-toggle="collapse"
+						data-target="#navbarNavAltMarkup"
+						aria-controls="navbarNavAltMarkup"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<!-- NavBar menu items -->
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a class="nav-item nav-link" href="/">Player</a>
+						<a class="nav-item nav-link active" href="#">Documentation</a>
+					</div>
+				</div>
+			</nav> <!-- NAVBAR END -->
+
+			<!------------------------------------------------------------------------->
+			<!--                            MAIN CONTAINER                           -->
+			<!------------------------------------------------------------------------->
+			<div id="main_container" class="container">
+
+
+
+			</div> <!-- MAIN CONTAINER END -->
+		</div> <!-- PAGE CONTAINER END -->
+
+		<!------------------------------------------------------------------------->
+		<!--                               SCRIPTS                               -->
+		<!------------------------------------------------------------------------->
+		<!--
+			For simplicity, just reference to the official CDN of these OSS
+			projects. In a production deployment, these should be hosted in the
+			web client's container.
+		-->
+
+		<!-- jQuery (used by Boostrap) -->
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+				integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+				crossorigin="anonymous"></script>
+
+		<!-- Popper.js (used by Boostrap) -->
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+				integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+				crossorigin="anonymous"></script>
+
+		<!-- Boostrap -->
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+				integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+				crossorigin="anonymous"></script>
+
+		<!-- ShowDown MD Renderer -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+
+		<script>
+			showdown.setFlavor('github');
+			var asyncreq = new XMLHttpRequest();
+			asyncreq.open('GET', 'doc.md');
+			asyncreq.onreadystatechange = function() {
+				var converter = new showdown.Converter({
+					simpleLineBreaks: false,
+					tables: true
+				});
+				document.getElementById("main_container").innerHTML = 
+						converter.makeHtml(asyncreq.responseText);
+			}
+			asyncreq.send();
+		</script>
+	</body>
+</html>
