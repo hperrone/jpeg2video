@@ -1,5 +1,9 @@
 # jpeg2video
 
+## Detailed project documentation
+
+The project's detailed documentation can be found [here](doc/doc.md)
+
 ## Requirements
 
 The solution has been developed and tested using:
